@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Post Header -->
+<header class="masthead" style="background-image:
+  {% if post.hero.url is not Null %}
+    url({{post.hero.url}})
+  {% else %}
+    url({% static 'img/home-bg.jpg' %})
+  {% endif %}
+  ">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="post-heading">
+          <h1>{{post.title}}</h1>
+          <h2 class="subheading">{{post.description}}</h2>
+          <span class="meta">Postado por
+              <a href="#">{{post.author}}</a>
+              em {{post.created}}.
+          {% if post.created != post.modified %}
+            <br/>
+            <span style="font-size: 13px">Modificado em {{post.modified}}.</span>
+          {% endif %}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+          {{post.content | safe}}
+      </div>
+    </div>
+  </div>
+</article>
+{% endblock %}

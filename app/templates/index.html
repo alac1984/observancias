@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Main Content -->
+{% include 'components/page-header.html' %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            {% for post in post_list %}
+            <div class="post-preview">
+                <a href="{% url 'post_detail' post.slug %}">
+                    <h2 class="post-title">{{post.title}}</h2>
+                    <h3 class="post-subtitle">{{post.description}}</h3>
+                </a>
+                <p class="post-meta">Posted by
+                    <a href="#">{{post.author}}</a>
+                    on {{post.created}}</p>
+            </div>
+            <hr>
+            {% endfor %}
+            <!-- Pager -->
+            {% if is_paginated %}
+            <h1>TEM PAGINAÇÃO</h1>
+            <div class="clearfix">
+                {% if page_obj.has_previous %}
+                <a class="btn btn-primary float-left" href="?page={{ page_obj.previous_page_number }}"><- Mais Novos</a>
+                {% endif %}
+                {% if page_obj.has_next %}
+                <a class="btn btn-primary float-right" href="?page={{ page_obj.next_page_number }}">Mais Antigos -></a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

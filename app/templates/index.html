@@ -11,15 +11,14 @@
                     <h2 class="post-title">{{post.title}}</h2>
                     <h3 class="post-subtitle">{{post.description}}</h3>
                 </a>
-                <p class="post-meta">Posted by
-                    <a href="#">{{post.author}}</a>
-                    on {{post.created}}</p>
+                <p class="post-meta">Escrito por
+                    <a href="#">{{post.author.first_name}}</a>
+                    em {{post.created}}</p>
             </div>
             <hr>
             {% endfor %}
             <!-- Pager -->
             {% if is_paginated %}
-            <h1>TEM PAGINAÇÃO</h1>
             <div class="clearfix">
                 {% if page_obj.has_previous %}
                 <a class="btn btn-primary float-left" href="?page={{ page_obj.previous_page_number }}"><- Mais Novos</a>

@@ -29,7 +29,9 @@ INSTALLED_APPS = [
     # My own apps
     'app',
     # Third part libraries
-    'django_summernote'
+    'django_summernote',
+    'crispy_forms',
+    'bsmodals',
 ]
 
 MIDDLEWARE = [
@@ -118,3 +120,7 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

@@ -5,8 +5,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from .models import Post, Comment
 from .forms import CommentForm
-from ast import literal_eval
-import json
+from .decorators import check_recaptcha
 
 
 class IndexView(generic.ListView):
@@ -14,13 +13,13 @@ class IndexView(generic.ListView):
     template_name = 'index.html'
     paginate_by = 2
 
-
+@check_recaptcha
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
     form = CommentForm(request.POST or None)
 
     if request.method == 'POST':
-        if form.is_valid():
+        if form.is_valid() and request.recaptcha_is_valid:
             parent_obj = None
             try:
                 parent_id = int(request.POST.get('parent_id'))

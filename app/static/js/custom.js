@@ -10,3 +10,11 @@ function showReplyForm(val) {
         el.style.display = "none"
     }
 }
+
+function change_modal_btn_text(text) {
+    var modal = $('#bsmodals-alert');
+    modal.find('#bsmodals-alert-close').html(text);
+    console.log(text)
+
+    modal.modal();
+}

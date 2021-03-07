@@ -68,7 +68,7 @@
         {% for comment in comments %}
         <div style="font-family: 'Open Sans', sans-serif; background-color: #F5F5F5; border-radius: 10px; padding: 30px 25px; margin-bottom: 20px">
           <div style="font-size: 18px; font-weight: bold; margin-bottom: 10px"><span style="color: #0083A3;">{{comment.name.upper}}</span> DISSE:</div>
-          <div style="font-size: 17px; margin-bottom: 10px;">{{comment.body}}</div>
+          <div style="word-break: break-word; font-size: 17px; margin-bottom: 10px;">{{comment.body}}</div>
           <div style="margin-top: 30px; display: flex; justify-content: space-between; align-items: center">
             <div style="font-size: 14px; font-weight: bold">POSTADO EM {{comment.created | date:"DATE_FORMAT" | upper }}</div>
             <button id="comment-{{comment.id}}" class="btn btn-outline-primary" onclick="showReplyForm(this.id)" style="border-radius: 5px; padding: 10px 16px; font-size: 12px">Responder</button>
@@ -77,7 +77,7 @@
         {% for reply in comment.replies.all %}
         <div style="font-family: 'Open Sans', sans-serif; background-color: #FFE8B2; border-radius: 10px; padding: 30px 25px; margin-bottom: 20px; margin-left: 40px;">
           <div style="font-size: 18px; font-weight: bold; margin-bottom: 10px"><span style="color: #0083A3;">{{reply.name.upper}}</span> RESPONDEU:</div>
-          <div style="font-size: 17px; margin-bottom: 10px;">{{reply.body}}</div>
+          <div style="word-break: break-word; font-size: 17px; margin-bottom: 10px;">{{reply.body}}</div>
           <div style="margin-top: 30px; font-size: 14px; font-weight: bold">POSTADO EM {{reply.created | date:"DATE_FORMAT" | upper }}</div>
         </div>
         {% endfor %}
@@ -91,7 +91,7 @@
           </form>
         </div>
         {% empty %}
-        <h3>Não há comentários ainda.</h3>
+        <h5>Não há comentários ainda.</h5>
         {% endfor %}
       </div>
     </div>

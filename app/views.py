@@ -18,10 +18,6 @@ class IndexView(generic.ListView):
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
     form = CommentForm(request.POST or None)
-    comments = Comment.objects.all()
-
-    for comment in comments:
-        print("comment.id = {} | seus replies: {}".format(comment.id, comment.replies.all()))
 
     if request.method == 'POST':
         if form.is_valid():
@@ -49,11 +45,9 @@ def post_detail(request, slug):
 
     context = {
         'post': post,
-        'comments': Comment.objects.filter(post=post.id),
+        'comments': Comment.objects.filter(post=post.id, parent__isnull=True),
         'form': form,
     }
-    print(context['comments'].get(id=56).parent)
-    print(context['comments'])
 
     return render(request, "post.html", context)
 

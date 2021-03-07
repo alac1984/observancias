@@ -107,8 +107,10 @@
 {% for message in messages %}
     {% if message.tags == 'success' %}
     (bsmodals_alert('Comentário adicionado', '{{message}}'))
+    (change_modal_btn_text("Fechar"))
     {% else %}
     (bsmodals_alert('Erro ao adicionar', '{{message}}'))
+    (change_modal_btn_text("Fechar"))
     {% endif %}
 {% endfor %}
 </script>

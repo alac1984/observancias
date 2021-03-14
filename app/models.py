@@ -26,6 +26,7 @@ class Base(models.Model):
 
 
 class Post(Base):
+
     title = models.CharField(max_length=150, unique=True)
     slug = models.SlugField(max_length=200, unique=True)
     hero = StdImageField('Hero', upload_to=get_file_path, variations={

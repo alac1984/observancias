@@ -1,17 +1,14 @@
 from django.views import generic
 from django.contrib import messages
 from django.urls import reverse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from .models import Post, Comment
 from .forms import CommentForm
 from .decorators import check_recaptcha
 
-
-class IndexView(generic.ListView):
-    queryset = Post.objects.filter(status=1).order_by('-created')
-    template_name = 'index.html'
-    paginate_by = 2
 
 @check_recaptcha
 def post_detail(request, slug):
@@ -57,5 +54,45 @@ class AboutView(generic.TemplateView):
 
 class ContactView(generic.TemplateView):
     template_name = 'contact.html'
+
+
+class IndexView(generic.ListView):
+    queryset = Post.objects.filter(status=1).order_by('-created')
+    template_name = 'index.html'
+    paginate_by = 2
+
+
+def search_result(request):
+    query = request.GET.get('q')
+    results = Post.objects.filter(
+        Q(title__icontains=query) | Q(description__icontains=query)
+    )
+    page = request.GET.get('page', 1)
+    paginator = Paginator(results, 5)
+
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(5)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
+    message = ""
+
+    if paginator.count >= 2:
+        message = "Encontramos {} postagens com os termos fornecidos".format(paginator.count)
+    elif paginator.count == 1:
+        message = "Encontramos 1 postagem com os termos fornecidos"
+    else:
+        message = "Não encontramos postagens com os termos fornecidos"
+
+    context = {
+        "query": query,
+        "posts": posts,
+        "message": message
+    }
+
+    return render(request, "search.html", context)
+
 
 

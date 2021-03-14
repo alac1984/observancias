@@ -1,0 +1,19 @@
+{% load static %}
+<!-- Page Header -->
+<header class="masterhead search" style="background-image: url({% static 'img/search-bg.jpg' %})">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="search-header">
+                    <h1>Resultados da Busca</h1>
+                    <span class="subheading">
+                        {% if message %}
+                            {{ message }}
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

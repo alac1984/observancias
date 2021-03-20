@@ -1,0 +1,19 @@
+{% load static %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="social-sharing">
+            <!-- Facebook button -->
+            <div class="share-btn" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="large">
+                <a href="javascript:fbShare('520', '350')" class="fb-xfbml-parse-ignore">
+                    <img class="share-btn-img" src="{% static 'img/facebook.png' %}">
+                </a>
+            </div>
+            <!-- Twitter button -->
+            <div class="share-btn">
+                <a href="javascript:twitterShare('520', '350')" class="fb-xfbml-parse-ignore">
+                    <img class="share-btn-img" src="{% static 'img/twitter.png' %}">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

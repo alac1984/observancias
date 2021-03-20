@@ -5,3 +5,5 @@ __pycache__
 .idea
 temp_used/*
 venv/*
+.idea/
+settings.json

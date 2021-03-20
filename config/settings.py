@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     'django_summernote',
     'crispy_forms',
     'bsmodals',
+    'analytical',
+    'django_social_share',
 ]
 
 MIDDLEWARE = [

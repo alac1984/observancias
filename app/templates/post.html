@@ -2,104 +2,105 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
+
 <!-- Post Header -->
 <header class="masthead" style="background-image:
-  {% if post.hero.url is not Null %}
-    url({{post.hero.url}})
-  {% else %}
-    url({% static 'img/home-bg.jpg' %})
-  {% endif %}
-  ">
-  <div class="overlay"></div>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-        <div class="post-heading">
-          <h1>{{post.title}}</h1>
-          <h2 class="subheading">{{post.description}}</h2>
-          <span class="meta">Postado por
-              <a href="#">{{post.author}}</a>
-              em {{post.created}}.
-          {% if post.created != post.modified %}
-            <br/>
-            <span style="font-size: 13px">Modificado em {{post.modified}}.</span>
-          {% endif %}
-          </span>
+    {% if post.hero.url is not Null %}
+        url({{post.hero.url}})
+    {% else %}
+        url({% static 'img/home-bg.jpg' %})
+    {% endif %}
+    ">
+    <div class="overlay"></div>
+    <div class="container">
+            <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="post-heading">
+                <h1>{{post.title}}</h1>
+                <h2 class="subheading">{{post.description}}</h2>
+                <span class="meta">Postado por
+                    <a href="#">{{post.author}}</a> em {{post.created}}.
+                    {% if post.created != post.modified %}
+                    <br/>
+                    <span style="font-size: 13px">Modificado em {{post.modified}}.</span>
+                    {% endif %}
+                </span>
+                {% include 'components/social-share.html' %}
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </header>
 
-<!-- Post Content -->
+    <!-- Post Content -->
 <article>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-        {{post.content | safe}}
-      </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                {{post.content | safe}}
+            </div>
+        </div>
+        <hr />
     </div>
-    <hr />
-  </div>
 </article>
 
 <!-- Comment Form -->
 <section>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-        <h3 style="margin: 20px 0;">Deixe seu comentário:</h3>
-        <form action="" method="post">
-          {% csrf_token %}
-          <div>{{ form | crispy }}</div>
-          <script src='https://www.google.com/recaptcha/api.js'></script>
-          <div class="g-recaptcha" data-sitekey="6LcZ33UaAAAAAF1NCS5Ds7mkUXaX4ebfNEHKYU2C"></div>
-          <input style="margin-top: 15px" class="btn btn-primary" type="submit" value="Enviar">
-        </form>
-      </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <h3 style="margin: 20px 0;">Deixe seu comentário:</h3>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div>{{ form | crispy }}</div>
+                    <script src='https://www.google.com/recaptcha/api.js'></script>
+                    <div class="g-recaptcha" data-sitekey="6LcZ33UaAAAAAF1NCS5Ds7mkUXaX4ebfNEHKYU2C"></div>
+                    <input style="margin-top: 15px" class="btn btn-primary" type="submit" value="Enviar">
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 </section>
 
 <!-- Post Comments -->
 <section>
-  <div class="container">
+<div class="container">
     <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
+    <div class="col-lg-8 col-md-10 mx-auto">
         <h3 style="margin: 20px 0;">Comentários:</h3>
         {% for comment in comments %}
         <div style="font-family: 'Open Sans', sans-serif; background-color: #F5F5F5; border-radius: 10px; padding: 30px 25px; margin-bottom: 20px">
-          <div style="font-size: 18px; font-weight: bold; margin-bottom: 10px"><span style="color: #0083A3;">{{comment.name.upper}}</span> DISSE:</div>
-          <div style="word-break: break-word; font-size: 17px; margin-bottom: 10px;">{{comment.body}}</div>
-          <div style="margin-top: 30px; display: flex; justify-content: space-between; align-items: center">
+        <div style="font-size: 18px; font-weight: bold; margin-bottom: 10px"><span style="color: #0083A3;">{{comment.name.upper}}</span> DISSE:</div>
+        <div style="word-break: break-word; font-size: 17px; margin-bottom: 10px;">{{comment.body}}</div>
+        <div style="margin-top: 30px; display: flex; justify-content: space-between; align-items: center">
             <div style="font-size: 14px; font-weight: bold">POSTADO EM {{comment.created | date:"DATE_FORMAT" | upper }}</div>
             <button id="comment-{{comment.id}}" class="btn btn-outline-primary" onclick="showReplyForm(this.id)" style="border-radius: 5px; padding: 10px 16px; font-size: 12px">Responder</button>
-          </div>
+        </div>
         </div>
         {% for reply in comment.replies.all %}
         <div style="font-family: 'Open Sans', sans-serif; background-color: #FFE8B2; border-radius: 10px; padding: 30px 25px; margin-bottom: 20px; margin-left: 40px;">
-          <div style="font-size: 18px; font-weight: bold; margin-bottom: 10px"><span style="color: #0083A3;">{{reply.name.upper}}</span> RESPONDEU:</div>
-          <div style="word-break: break-word; font-size: 17px; margin-bottom: 10px;">{{reply.body}}</div>
-          <div style="margin-top: 30px; font-size: 14px; font-weight: bold">POSTADO EM {{reply.created | date:"DATE_FORMAT" | upper }}</div>
+        <div style="font-size: 18px; font-weight: bold; margin-bottom: 10px"><span style="color: #0083A3;">{{reply.name.upper}}</span> RESPONDEU:</div>
+        <div style="word-break: break-word; font-size: 17px; margin-bottom: 10px;">{{reply.body}}</div>
+        <div style="margin-top: 30px; font-size: 14px; font-weight: bold">POSTADO EM {{reply.created | date:"DATE_FORMAT" | upper }}</div>
         </div>
         {% endfor %}
         <div id="reply-form{{comment.id}}" style="display: none;">
-          <h5 style="margin-bottom: 25px">Responder:</h5>
-          <form id="reply-form" action="" method="post">
+        <h5 style="margin-bottom: 25px">Responder:</h5>
+        <form id="reply-form" action="" method="post">
             {% csrf_token %}
             <div>{{ form | crispy }}</div>
             <input type="hidden" name="parent_id" value="{{ comment.id }}">
             <script src='https://www.google.com/recaptcha/api.js'></script>
             <div class="g-recaptcha" data-sitekey="6LcZ33UaAAAAAF1NCS5Ds7mkUXaX4ebfNEHKYU2C"></div>
             <input style="margin-top: 15px" class="btn btn-primary" type="submit" value="Enviar">
-          </form>
+        </form>
         </div>
         {% empty %}
         <h5>Não há comentários ainda.</h5>
         {% endfor %}
-      </div>
     </div>
-  </div>
+    </div>
+</div>
 </section>
 
 {% endblock %}

@@ -1,11 +1,12 @@
 {% load static %}
+{% load analytical %}
 {% include "bsmodals/alert.html" %}
 {% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
+    {% analytical_head_top %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -23,10 +24,14 @@
 
     <!-- Custom styles for this template -->
     <link href="{% static 'css/clean-blog.css' %}" rel="stylesheet">
-
+    {% analytical_head_bottom %}
 </head>
 
 <body>
+
+{% analytical_body_top %}
+<!-- Social media share buttons functions -->
+<script src={% static '/js/custom-share-btns.js' %}></script>
 
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
@@ -120,7 +125,7 @@
     {% endif %}
 {% endfor %}
 </script>
-
+{% analytical_body_bottom %}
 </body>
 
 </html>

@@ -41,6 +41,7 @@ def post_detail(request, slug):
 
     context = {
         'post': post,
+        'image': ".{}".format(post.hero.url),
         'comments': Comment.objects.filter(post=post.id, parent__isnull=True),
         'form': form,
     }

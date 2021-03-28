@@ -14,8 +14,6 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get('DEBUG'))
-print(DEBUG)
-print(type(DEBUG))
 
 ALLOWED_HOSTS = [s.strip() for s in os.environ.get('ALLOWED_HOSTS').split(',')]
 
@@ -36,6 +34,7 @@ INSTALLED_APPS = [
     'bsmodals',
     'analytical',
     'django_social_share',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -123,7 +122,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# Not needed as I'm putting every photo on S3
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
@@ -137,5 +137,11 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'alac1984@gmail.com'
 EMAIL_HOST_PASSWORD = 'A1k8u2@ndre'
 EMAIL_PORT = '587'
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_STORAGE_BUCKET_NAME = 'observancias-blog'
+AWS_S3_REGION_NAME = 'sa-east-1'
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 
 django_heroku.settings(locals())

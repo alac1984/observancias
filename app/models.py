@@ -4,12 +4,6 @@ from django.contrib.auth.models import User
 from stdimage.models import StdImageField
 
 
-def get_file_path(_instance, filename):
-    ext = filename.split('.')[-1]
-    filename = f'post-heros/{uuid.uuid4()}.{ext}'
-    return filename
-
-
 STATUS = (
     (0, 'Draft'),
     (1, 'Publish'),
@@ -24,16 +18,11 @@ class Base(models.Model):
     class Meta:
         abstract = True
 
-
 class Post(Base):
 
     title = models.CharField(max_length=150, unique=True)
     slug = models.SlugField(max_length=200, unique=True)
-    hero = StdImageField('Hero', upload_to=get_file_path, variations={
-        'medium': {'width': 1200, 'height': 799, 'crop': True},
-        'small': {'width': 800, 'height': 533, 'crop': True},
-        'thumb': {'width': 400, 'height': 266, 'crop': True}
-    }, blank=True)
+    hero = models.FileField()
     description = models.CharField(max_length=250)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')
     content = models.TextField()
@@ -41,6 +30,10 @@ class Post(Base):
 
     class Meta:
         ordering = ['-created']
+    
+    def save(self, *args, **kwargs):
+        self.hero.name = str(uuid.uuid4()) + self.hero.name
+        super(Post, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.title

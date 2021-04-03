@@ -1,8 +1,13 @@
-{% extends 'base.html' %}
+{% extends 'base.html'%}
 {% load static %}
 {% load crispy_forms_tags %}
-{% block content %}
 
+{% block metadata %}
+    {% with title=True%}
+        {{block.super}}
+    {% endwith %}
+{% endblock %}
+{% block content %}
 <!-- Post Header -->
 <header class="masthead" style="background-image:
     {% if post.hero.url is not Null %}

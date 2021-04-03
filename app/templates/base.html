@@ -1,18 +1,29 @@
 {% load static %}
-{% load analytical %}
 {% include "bsmodals/alert.html" %}
 {% load crispy_forms_tags %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
-    {% analytical_head_top %}
+    <!-- Meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Clean Blog - Start Bootstrap Theme</title>
+    <meta name="author" content="André Carvalho">
+    {% block metadata %}
+        {% if title %}
+        <title>{{post.title}}</title>
+        <meta name="description" content="{{post.description}}">
+        <meta property="og:title" content="{{post.title}}" />
+        <meta property="og:description" content="{{post.description}}" />
+        <meta property="og:image" content="{{post.hero.url}}" />
+        {% else %}
+        <title>Observâncias</title>
+        <meta name="description" content="Meu singelo diário de bordo. Temos textos e podcasts. Pegue sua xícara de café e aproveite.">
+        <meta property="og:title" content="Observâncias" />
+        <meta property="og:description" content="Meu singelo diário de bordo. Temos textos e podcasts. Pegue sua xícara de café e aproveite." />
+        <meta property="og:image" content="{% static 'img/landpage-hero.jpeg' %}" />
+        {% endif %}
+    {% endblock %}
 
     <!-- Bootstrap core CSS -->
     <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -24,12 +35,9 @@
 
     <!-- Custom styles for this template -->
     <link href="{% static 'css/clean-blog.css' %}" rel="stylesheet">
-    {% analytical_head_bottom %}
 </head>
 
 <body>
-
-{% analytical_body_top %}
 <!-- Social media share buttons functions -->
 <script src={% static '/js/custom-share-btns.js' %}></script>
 
@@ -125,7 +133,6 @@
     {% endif %}
 {% endfor %}
 </script>
-{% analytical_body_bottom %}
 </body>
 
 </html>

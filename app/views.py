@@ -39,6 +39,7 @@ def post_detail(request, slug):
             form = CommentForm()
             messages.error(request, "Houve um erro ao adicionar seu comentário.")
 
+    print('post.hero.url', post.hero.url)
     context = {
         'post': post,
         'image': ".{}".format(post.hero.url),

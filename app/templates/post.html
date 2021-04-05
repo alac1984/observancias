@@ -2,11 +2,11 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
-{% block metadata %}
-    {% with title=True%}
-        {{block.super}}
-    {% endwith %}
-{% endblock %}
+{% block title %}{{post.title}}{% endblock %}
+{% block ogtitle %}{{post.title}}{% endblock %}
+{% block description %}{{post.description}}{% endblock %}
+{% block ogdescription %}{{post.description}}{% endblock %}
+{% block image %}{{post.hero.url}}{% endblock %}
 {% block content %}
 <!-- Post Header -->
 <header class="masthead" style="background-image:

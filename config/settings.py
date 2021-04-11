@@ -45,6 +45,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'moesifdjango.middleware.moesif_middleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -145,3 +146,17 @@ AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 
 django_heroku.settings(locals())
+
+def identifyUser(req, res):
+    if req.user and req.user.is_authenticated:
+        return req.user.username
+    else:
+        return None
+
+MOESIF_MIDDLEWARE = {
+    'APPLICATION_ID': 'eyJhcHAiOiIxOTg6MTQ0OSIsInZlciI6IjIuMCIsIm9yZyI6Ijg4OjE5NDkiLCJpYXQiOjE2MTcyMzUyMDB9.ALP8lpgF7wvbKR1DXTTxDrxoBM4_hNZrR9DraEcx-WU',
+
+    'CAPTURE_OUTGOING_REQUESTS': False, # Set to True to also capture outgoing calls to 3rd parties.
+        
+    'IDENTIFY_USER': identifyUser # Optional hook to link API calls to users
+}

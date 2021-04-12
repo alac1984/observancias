@@ -12,9 +12,12 @@ dj-database-url==0.5.0
 dj-static==0.0.6
 Django==3.1.7
 django-analytical==3.0.0
+django-appconf==1.0.4
+django-autoslug==1.9.8
 django-bstrap-modals==2.1.2
 django-crispy-forms==1.11.1
 django-heroku==0.3.1
+django-podcasting==1.3.2
 django-social-share==2.2.1
 django-stdimage==5.1.1
 django-storages==1.11.1

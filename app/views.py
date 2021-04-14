@@ -59,7 +59,7 @@ class ContactView(generic.TemplateView):
 
 
 class IndexView(generic.ListView):
-    queryset = Post.objects.filter(status=1).order_by('-created')
+    queryset = Post.objects.filter(active=True).order_by('-created')
     template_name = 'index.html'
     paginate_by = 2
 
@@ -67,7 +67,7 @@ class IndexView(generic.ListView):
 def search_result(request):
     query = request.GET.get('q')
     results = Post.objects.filter(
-        Q(title__icontains=query) | Q(description__icontains=query)
+        Q(title__icontains=query) | Q(description__icontains=query) & Q(active=True)
     )
     page = request.GET.get('page', 1)
     paginator = Paginator(results, 5)

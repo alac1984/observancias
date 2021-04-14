@@ -4,12 +4,6 @@ from django.contrib.auth.models import User
 from stdimage.models import StdImageField
 
 
-STATUS = (
-    (0, 'Draft'),
-    (1, 'Publish'),
-)
-
-
 class Base(models.Model):
     created = models.DateField('Created', auto_now_add=True)
     modified = models.DateField('Modified', auto_now=True)
@@ -26,7 +20,6 @@ class Post(Base):
     description = models.CharField(max_length=250)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')
     content = models.TextField()
-    status = models.IntegerField(choices=STATUS, default=0)
 
     class Meta:
         ordering = ['-created']
@@ -52,3 +45,9 @@ class Comment(Base):
     def __str__(self):
         return "comment_id {} | post_id {} | username {}".format(self.id, self.post, self.name)
 
+
+class Podcast(Base):
+    title = models.CharField(max_length=150, unique=True)
+    slug = models.SlugField(max_length=200, unique=True)
+    hero = models.FileField()
+    file = models.FileField()

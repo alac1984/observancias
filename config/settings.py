@@ -5,7 +5,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -68,7 +67,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
@@ -82,7 +80,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -102,7 +99,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -115,7 +111,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
@@ -135,8 +130,8 @@ GOOGLE_RECAPTCHA_SECRET_KEY = os.environ.get('GOOGLE_RECAPTCHA_SECRET_KEY')
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.cloudmta.net'
-EMAIL_HOST_USER = 'nao-responda@observancias.com.br'
-EMAIL_HOST_PASSWORD = '7c2f948c506dea73'
+EMAIL_HOST_USER = '7c2f948c506dea73'
+EMAIL_HOST_PASSWORD = 'cJBfgcvGf64z5pTKXLzYBecd'
 EMAIL_PORT = '587'
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
@@ -147,16 +142,18 @@ AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 
 django_heroku.settings(locals())
 
+
 def identifyUser(req, res):
     if req.user and req.user.is_authenticated:
         return req.user.username
     else:
         return None
 
+
 MOESIF_MIDDLEWARE = {
     'APPLICATION_ID': 'eyJhcHAiOiIxOTg6MTQ0OSIsInZlciI6IjIuMCIsIm9yZyI6Ijg4OjE5NDkiLCJpYXQiOjE2MTcyMzUyMDB9.ALP8lpgF7wvbKR1DXTTxDrxoBM4_hNZrR9DraEcx-WU',
 
-    'CAPTURE_OUTGOING_REQUESTS': False, # Set to True to also capture outgoing calls to 3rd parties.
-        
-    'IDENTIFY_USER': identifyUser # Optional hook to link API calls to users
+    'CAPTURE_OUTGOING_REQUESTS': False,  # Set to True to also capture outgoing calls to 3rd parties.
+
+    'IDENTIFY_USER': identifyUser  # Optional hook to link API calls to users
 }

@@ -2,13 +2,15 @@ from django.views import generic
 from django.contrib import messages
 from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.mail import send_mail
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from .models import Post, Comment, Podcast
 from .forms import CommentForm
 from .decorators import check_recaptcha
-
+import os
+from datetime import datetime
 
 @check_recaptcha
 def post_detail(request, slug):
@@ -17,6 +19,32 @@ def post_detail(request, slug):
 
     if request.method == 'POST':
         if form.is_valid() and request.recaptcha_is_valid:
+
+            # Send email logic
+            now = datetime.now()
+            replaces = {
+                "COMENTÁRIO": form.cleaned_data["body"],
+                "NOME": form.cleaned_data["name"],
+                "HORA": now.strftime("%H:%M"),
+                "DIA": now.strftime("%d/%m/%Y")
+            }
+
+            email_title = "Observâncias - Seu comentário foi adicionado"
+            email_sender = "nao-responda@observancias.com.br"
+
+            with open(os.path.join(os.getcwd(), "app/emails/comment_email.txt")) as f:
+                email_txtbody = f.read()
+
+            with open(os.path.join(os.getcwd(), "app/emails/comment_email.html")) as f:
+                email_htmlbody = f.read()
+
+            for i, j in replaces.items():
+                email_txtbody = email_txtbody.replace(i, j)
+                email_htmlbody = email_htmlbody.replace(i, j)
+
+            send_mail(email_title, email_txtbody, email_sender, [form.cleaned_data["email"], ], html_message=email_htmlbody)
+
+            # Comment logic
             parent_obj = None
             try:
                 parent_id = int(request.POST.get('parent_id'))

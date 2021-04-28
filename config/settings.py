@@ -134,9 +134,9 @@ GOOGLE_RECAPTCHA_SECRET_KEY = os.environ.get('GOOGLE_RECAPTCHA_SECRET_KEY')
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'alac1984@gmail.com'
-EMAIL_HOST_PASSWORD = 'A1k8u2@ndre'
+EMAIL_HOST = 'smtp.cloudmta.net'
+EMAIL_HOST_USER = 'nao-responda@observancias.com.br'
+EMAIL_HOST_PASSWORD = '7c2f948c506dea73'
 EMAIL_PORT = '587'
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'

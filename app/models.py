@@ -1,7 +1,6 @@
 import uuid
 from django.db import models
 from django.contrib.auth.models import User
-from stdimage.models import StdImageField
 
 
 class Base(models.Model):
@@ -49,5 +48,12 @@ class Comment(Base):
 class Podcast(Base):
     title = models.CharField(max_length=150, unique=True)
     slug = models.SlugField(max_length=200, unique=True)
+    description = models.CharField(max_length=250)
     hero = models.FileField()
-    file = models.FileField()
+    url = models.CharField(max_length=200)
+
+    class Meta:
+        ordering = ['created']
+
+    def __str__(self):
+        return self.title

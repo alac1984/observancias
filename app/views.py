@@ -5,7 +5,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from .models import Post, Comment
+from .models import Post, Comment, Podcast
 from .forms import CommentForm
 from .decorators import check_recaptcha
 
@@ -63,6 +63,10 @@ class IndexView(generic.ListView):
     template_name = 'index.html'
     paginate_by = 2
 
+class PodcastView(generic.ListView):
+    queryset = Podcast.objects.filter(active=True).order_by('-created')
+    template_name = 'podcasts.html'
+    paginate_by = 2
 
 def search_result(request):
     query = request.GET.get('q')

@@ -1,6 +1,6 @@
 from django_summernote.admin import SummernoteModelAdmin
 from django.contrib import admin
-from .models import Post, Comment
+from .models import Post, Comment, Podcast
 
 
 @admin.register(Post)
@@ -19,3 +19,7 @@ class CommentAdmin(SummernoteModelAdmin):
     search_fields = ['name', 'email']
     summernote_fields = ('body',)
 
+@admin.register(Podcast)
+class PodcastAdmin(admin.ModelAdmin):
+    list_display = ('title', 'slug', 'hero', 'url' )
+    prepopulated_fields = {'slug': ('title',)}

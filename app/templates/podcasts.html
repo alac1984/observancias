@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Podcasts - Observâncias{% endblock %}
+{% block ogtitle %}Podcast do Observâncias: nossas reflexões em alto e bom som{% endblock %}
+{% block description %}Reúno aqui minhas reflexões, todas em áudio, para os amantes de podcast.{% endblock %}
+{% block ogdescription %}Reúno aqui minhas reflexões, todas em áudio, para os amantes de podcast.{% endblock %}
+{% block image %}{% static 'img/podcast-bg.jgep' %}{% endblock %}
+{% block content %}
+{% include 'components/main-header.html' with title="Podcasts" subtitle="Nossas reflexões em áudio" image='../static/img/podcast-bg.jpeg' %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="podcast-intro">
+                <p>É nóis!</p>
+            <div>
+            <div class="podcast-list">
+            {% for podcast in podcast_list%}
+                <div class="podcast-item-container">
+                    <img src="{{podcast.hero.url}}">
+                    <div class="podcast-description">
+                        <h5>Episódio nº {{podcast.id}}</h5>
+                        <h3>{{podcast.title}}</h3>
+                        <p>{{podcast.description}}</p>
+                    </div>
+                    <div class="podcast-iframe-container">
+                        <iframe src="{{podcast.url}}" height="102px" width="400px" frameborder="0" scrolling="no"></iframe> 
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+
+        <div>
+    </div>
+</div>
+{% endblock%}
